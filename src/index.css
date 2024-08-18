@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body {
+    /* background-color: var(--m-background-color); */
+}
+:root {
+    --m-background-color: linear-gradient(to right, #000000 30%, #150c16);
+    --flowpane-color: #334155;
+    --m-padding: 1rem;
+
+    
+    background: var(--m-background-color);
+    padding-right:  var(--m-padding);
+    padding-left: var(--m-padding);
+}
