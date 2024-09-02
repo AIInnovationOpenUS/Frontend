@@ -1,7 +1,7 @@
 const responseSchema = {
     url: '',
     label: '',
-    test_case : '',
+    test_case : [],
     DOM: '',
     selector: '',
     imageBase64: ''

@@ -15,6 +15,9 @@ function ConfigPanel() {
     const onClickTest = () => {
         setState({...state, select: 'TEST'})
     }
+    const onClickStatus = () => {
+        setState({...state, select: 'STATUS'})
+    }
     return (
         <div className="w-1/3 h-full">
             {/* <div className="w-full h-1/3 bg-[#19233b] rounded-xl overflow-hidden border-2 border-solid border-white mb-0.5">
@@ -33,6 +36,12 @@ function ConfigPanel() {
                         className={`${state.select=='TEST' ? 'bg-gray-300' : 'bg-gray-400 '} hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-xl mt-2 ml-2`}    
                     >
                         TESTCASE
+                    </button>
+                    <button 
+                        onClick={onClickStatus}
+                        className={`${state.select=='STATUS' ? 'bg-gray-300' : 'bg-gray-400 '} hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-xl mt-2 ml-2`}    
+                    >
+                        STATUS
                     </button>
                 </div>
                 <div className="w-full h-full p-2 flex flex-col items-center gap-8 pb-6">
