@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   ReactFlow,
   addEdge,
@@ -12,7 +12,8 @@ import {
 } from '@xyflow/react';
 import dagre from 'dagre';
 import '@xyflow/react/dist/style.css';
-import processNodes from '../../utils/index.js';
+import { processNodes } from '../../utils';
+import { DOMContext } from '../../context/index.jsx';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -20,27 +21,21 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 172;
 const nodeHeight = 36;
 
-const getLayoutedElements = (nodes, edges, direction = 'TB') => {
-    console.log(1);
+const getLayoutedElements = (nodes, edges, direction = 'LR') => {
     const isHorizontal = direction === 'LR';
-    console.log(2);
     dagreGraph.setGraph({ rankdir: direction });
 
-    console.log(3);
     nodes.forEach((node) => {
         dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
 
-    console.log(4)
     edges.forEach((edge) => {
         dagreGraph.setEdge(edge.source, edge.target);
     });
 
-    console.log(5);
     console.log(dagreGraph)
     dagre.layout(dagreGraph);
 
-    console.log(6);
     const newNodes = nodes.map((node) => {
         const nodeWithPosition = dagreGraph.node(node.id);
         const newNode = {
@@ -63,19 +58,10 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 
 
 const LayoutFlow = ({data}) => {
-    // const [nodesData, setNodesData] = useState();
-    // const [edgesData, setEdgesData] = useState();
-    // useEffect(()=>{
-    //     const {nodesData, edgesData} = processNodes(data);
-    //     setNodes(nodes);
-    //     setEdges(edges);
-    //     console.log(nodesData);
-    //     console.log(edgesData);
-    // },[])
-
-    // console.log(data)
+    // console.log("layout: ",data)
+    const {dom, setDom} = useContext(DOMContext);
     const [nodesData, edgesData] = processNodes(data);
-    console.log(nodesData, edgesData.shift());
+    console.log("nodeData: ",nodesData, edgesData.shift());
 
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
         nodesData,
@@ -107,26 +93,34 @@ const LayoutFlow = ({data}) => {
     );
 
     return (
-        <div className="w-2/3 h-full rounded-tl-lg rounded-bl-lg border-2 border-solid border-white">
+        <div className="w-2/3 h-full rounded-xl border-2 border-solid border-white">
              <ReactFlow
                 nodes={nodes}
                 edges={edges}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
+                onNodeClick={(e, node) => {
+                    console.log("Node: ",node.data)
+                    const tmp = {
+                        url: 'https://tailwindcss.com/',
+                        ...node.data
+                    }
+                    setDom(tmp);
+                }}
                 //   connectionLineType={ConnectionLineType.SmoothStep}
-                fitView
+                // fitView
                 >
                 <Panel position="top-right">
-                    <div class="inline-flex">
+                    <div className="inline-flex">
                         <button 
                             onClick={() => onLayout('TB')}
-                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
+                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
                             Vertical
                         </button>
                         <button 
                             onClick={() => onLayout('LR')}
-                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
                             Horizontal
                         </button>
                     </div>

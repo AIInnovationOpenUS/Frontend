@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
-import getResponse from '../../utils/reponse';
+import React, { useState, useContext } from 'react';
 import Loading from '../loading';
+import { DOMContext } from '../../context';
+import { getResponse } from '../../utils';
 
 function Form({data, setData}) {
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(false);
     // const [resp, setResp] = useState();
-
+    const { dom, setDom} = useContext(DOMContext);
     const handleSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
       try {
+        // const response = await fetch("https://tailwindcss.com/",{
+        //     method: 'GET',
+        //     headers: {
+        //         // 'User-Agent': 'PostmanRuntime/7.41.1',
+        //         'Accept': '*/*',
+        //         'Accept-Encoding':'gzip, deflate, br',
+        //     }
+        // })
         const resp = await getResponse();
+        // console.log("resp: ", resp)
+        // setDom(dom)
         setData(resp);
         setLoading(false);
       } catch (error) {
         console.log(error)
       }
     };
-    // console.log("resp: ",resp);
+    console.log("resp: ",data);
     return (
         <div className="flex items-center h-full w-full">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full justify-center items-center">
