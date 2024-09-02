@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { DOMContext } from '../../context';
 import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {materialDark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import TestCase from './testCase';
 
 function TestPane() {
     const { dom, setDom } = useContext(DOMContext);
@@ -18,41 +19,19 @@ function TestPane() {
     //   }
     console.log(dom.test_case)
   return (
-    <div className="w-full h-full text-white px-4 py-6">
-        <div>
-            <h1 className='font-bold text-2xl text-[#e2e8f0]'>Action</h1>
-            <div className='pl-6 mt-4'>
-                <div className="w-full flex justify-start items-start gap-8 mb-8">
-                    <h2 className='font-bold text-lg text-slate-400'>Type</h2>
-                    <div className='font-medium text-white'>{dom.test_case?.action?.type}</div>
-                </div>
-                <div className="w-full flex justify-start items-start gap-8 mb-8">
-                    <h2 className='font-bold text-lg text-slate-400'>Value</h2>
-                    <div className='font-medium text-white'>{dom.test_case?.action?.value}</div>
-                </div>
-            </div>
-
-        </div>
-
-        <div>
-            <h1 className='font-bold text-2xl text-[#e2e8f0]'>Expectation</h1>
-            <div className='pl-6 mt-4'>
-                <div className="w-full flex justify-start items-start gap-8 mb-8">
-                    <h2 className='font-bold text-lg text-slate-400'>isReload</h2>
-                    <div className='font-medium text-white'>{`${dom.test_case?.expectation?.isReload}`}</div>
-                </div>
-                <div className="w-full flex justify-start items-start gap-8 mb-8">
-                    <h2 className='font-bold text-lg text-slate-400'>isComponentVisible</h2>
-                    <div className='font-medium text-white'>{`${dom.test_case?.expectation?.isComponentVisible}`}</div>
-                </div>
-                <div className="w-full flex justify-start items-start gap-8 mb-8">
-                    <h2 className='font-bold text-lg text-slate-400'>Description</h2>
-                    <textarea className='w-full h-[200px] bg-transparent font-medium text-white' value={dom.test_case?.expectation?.description}/>
-                </div>
-            </div>
-        </div>
-
+    <>
+    <div className="w-full h-full text-white px-4 py-6 overflow-auto scrollbar">
+        <TestCase  />
     </div>
+    <div className="w-full flex justify-center gap-4">
+        <button className="w-2/6 bg-transparent hover:bg-lime-500 text-white font-semibold hover:text-white py-2 px-4 border border-lime-500 hover:border-transparent rounded">
+            Create
+        </button>
+        <button className="w-2/6 bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            Run all
+        </button>
+    </div>
+</>
   )
 }
 

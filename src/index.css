@@ -2,7 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 10px;
+    }
+  
+    .scrollbar::-webkit-scrollbar-track {
+        @apply dark:bg-[#2c2c2c];
+      border-radius: 100vh;
+      background: white;
+    }
+  
+    .scrollbar::-webkit-scrollbar-thumb {
+        @apply dark:bg-[#f6f7ed];
+      background: #636363;
+      border-radius: 100vh;
+      border: 3px solid #636363;
+    }
+  
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #2c2c2c;
+    }
+}
 
 body {
     /* background-color: var(--m-background-color); */
