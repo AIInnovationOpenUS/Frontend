@@ -21,7 +21,12 @@ function TestPane() {
   return (
     <>
     <div className="w-full h-full text-white px-4 py-6 overflow-auto scrollbar">
-        <TestCase  />
+        {dom.test_case.map((value, index) => {
+            value = {...value, name: `Test case #${index+1}`}
+            return (
+                <TestCase  testcase={value}/>
+            )
+        })}
     </div>
     <div className="w-full flex justify-center gap-4">
         <button className="w-2/6 bg-transparent hover:bg-lime-500 text-white font-semibold hover:text-white py-2 px-4 border border-lime-500 hover:border-transparent rounded">

@@ -1,21 +1,19 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import  PlayButton from '../../assets/play-button.svg'
 import  SettingButton from '../../assets/settings.svg'
 import  Down from '../../assets/down.svg'
-import { DOMContext } from '../../context';
 
-function TestCase() {
+function TestCase({testcase}) {
     // const {name, test_case} = testData;
-    const { dom, setDom } = useContext(DOMContext);
     const [state, setState] = useState({
         drop: false,
     })
 
     const pattern = /(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s/;
-    const steps = dom.test_case?.expectation?.description.split(pattern);
-    console.log("steps: ",steps);
+    const steps = testcase?.expectation?.description.split(pattern);
+    // console.log("steps: ",steps);
   return (
-    <div>
+    <div className='my-2'>
         <div className="w-full h-[50px] rounded-lg flex justify-between px-6 items-center shadow-sm shadow-[#3b82f6] select-none">  
             <div className="flex items-center gap-2">
                 <img 
@@ -28,7 +26,7 @@ function TestCase() {
                         rotate: `${!state.drop ? '270deg' : '0deg'}`
                     }}
                 /> 
-                <p className="text-white font-medium text-lg hover:underline hover:cursor-pointer" onClick={(prev) => { setState({... prev, drop: !state.drop}) }}>name</p>
+                <p className="text-white font-medium text-lg hover:underline hover:cursor-pointer" onClick={(prev) => { setState({... prev, drop: !state.drop}) }}>{testcase.name}</p>
             </div>
             <div className="flex gap-2 items-center">
                 <img 
@@ -58,11 +56,11 @@ function TestCase() {
                 <div className='pl-6 mt-4'>
                     <div className="w-full flex justify-start items-start gap-8 mb-4">
                         <h2 className='font-bold text-base text-slate-400'>Type</h2>
-                        <div className='font-medium text-white'>{dom.test_case?.action?.type}</div>
+                        <div className='font-medium text-white'>{testcase?.action?.type}</div>
                     </div>
                     <div className="w-full flex justify-start items-start gap-8 mb-4">
                         <h2 className='font-bold text-base text-slate-400'>Value</h2>
-                        <div className='font-medium text-white'>{dom.test_case?.action?.value}</div>
+                        <div className='font-medium text-white'>{testcase?.action?.value}</div>
                     </div>
                 </div>
 
@@ -73,11 +71,11 @@ function TestCase() {
                 <div className='pl-6 mt-4'>
                     <div className="w-full flex justify-start items-start gap-8 mb-4">
                         <h2 className='font-bold text-base text-slate-400'>isReload</h2>
-                        <div className='font-medium text-white'>{`${dom.test_case?.expectation?.isReload}`}</div>
+                        <div className='font-medium text-white'>{`${testcase?.expectation?.isReload}`}</div>
                     </div>
                     <div className="w-full flex justify-start items-start gap-8 mb-4">
                         <h2 className='font-bold text-base text-slate-400'>isComponentVisible</h2>
-                        <div className='font-medium text-white'>{`${dom.test_case?.expectation?.isComponentVisible}`}</div>
+                        <div className='font-medium text-white'>{`${testcase?.expectation?.isComponentVisible}`}</div>
                     </div>
                     {/* <div className="w-full flex justify-start items-start gap-8 mb-4">
                         <h2 className='font-bold text-base text-slate-400'>Description</h2>
