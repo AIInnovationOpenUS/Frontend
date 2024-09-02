@@ -1,5 +1,10 @@
 import { responseSchema } from "../mock/reponse";
 
+//@ Input: Tree-structure response data
+//@ Output: List of node objects and edge objects (using for React-flow)
+//@ More:
+//  - Node object: {id, type, data: node data in tree, position} 
+//  - Edge object: {id, type, source, target} 
 function processNodes(node, parentName = "") {
     const nodes = [];
     const edges = [];
